@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[paperwidth=9.11cm,paperheight=7cm,left=0pt,bottom=0pt,right=0pt,top=0pt]{geometry}
+\usepackage[french]{babel}
+\usepackage[autolanguage]{numprint}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{twemojis}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\newcommand{\gf}[1][\relax]{\ensuremath{g_f\ifx#1\relax\else^{(\text{#1})}\fi}}
+\newcommand{\gfl}{\gf[low]}
+\newcommand{\gfh}{\gf[high]}
+\begin{document}\noindent
+\begin{tikzpicture}
+\pgfmathparse{1.1696 + 7/0.5578}\let\bul\pgfmathresult
+\pgfmathparse{1 + 0.8*(1.1696 + 1/0.5578 - 1)}\let\gfhy\pgfmathresult
+\begin{axis}[clip=false,
+  axis lines=left, axis on top,
+	ymin=0,
+	xmin=0,
+  xtick={0}, xticklabels={Surface},
+  ytick=\empty,
+  xticklabel style={font=\tiny},
+  xlabel={Profondeur}, ylabel={$P_{\text{compart}}$},
+  domain=0:60
+]
+\addplot[] {1 + x/10};
+\addplot[teal] {1};
+\node[anchor=base west] at (60,7) {$P_\text{ext}$};
+\node[anchor=base west] at (60,1) {$P_\text{atm}$};
+\addplot[violet]{1.1696 + (1 + x/10)/0.5578};
+\node[violet,anchor=base west] at (60,\bul) {$P_\text{Bülhman}$};
+%%% gf curves
+\addplot[blue,dotted,name path=GF low,opacity=0.3]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.3};
+\addplot[blue,dotted,name path=GF low second]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.1};
+\addplot[blue,dotted]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.8};
+\node[blue] (gl) at (20,10) {\gfl};
+\draw[blue,-stealth, shorten <=-7pt,shorten >=-7pt] ([xshift=3pt]gl.east) -- ++(-60:1pt);
+%%% gf points
+\node[inner sep=0pt] (mer) at (50,4) {\texttwemoji{merperson}};
+\fill[blue] (0,\gfhy) circle(2pt);
+\path[name path=mermaid] (0,4) -- (60,4);
+\path[name intersections={of=GF low and mermaid, by={lowgrad}}] (mer) -- (lowgrad);
+\fill[blue,opacity=0.3] (lowgrad) circle(2pt);
+\draw[dashed,name intersections={of=GF low second and mermaid, by={lowgradsec}}] (mer) -- (lowgradsec);
+\fill[blue] (lowgradsec) circle(2pt);
+\draw[-stealth,shorten <=3pt,shorten >=3pt, opacity=0.3] (lowgrad) -- (lowgradsec);
+%%% curve
+\draw[red,shorten >=-2cm,opacity=0.3] (0,\gfhy) -- (lowgrad);
+\draw[red,shorten >=-2cm, name path=sursaturation] (0,\gfhy) -- (lowgradsec);
+%%% ascent
+\path[name path=first depth] (10,1) -- (10,10);
+\draw[dashed, name intersections={of=sursaturation and first depth,by={first stop}}] (lowgradsec) |- (first stop);
+\draw[dashed] (first stop) |- (0,\gfhy);
+%
+\path[name path=abs] (0,0) -- (60,0);
+\end{axis}
+\end{tikzpicture}
+\end{document}

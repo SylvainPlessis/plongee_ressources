@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage[paperwidth=9.11cm,paperheight=7cm,left=0pt,bottom=0pt,right=0pt,top=0pt]{geometry}
+\usepackage[french]{babel}
+\usepackage[autolanguage]{numprint}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\begin{document}\noindent
+\begin{tikzpicture}
+\pgfmathparse{1.1696 + 7/0.5578}\let\bul\pgfmathresult
+\pgfmathparse{1.1696 + 4/0.5578}\let\buly\pgfmathresult
+\pgfmathparse{4 + 0.3*(\buly - 4)}\let\gfya\pgfmathresult
+\pgfmathparse{4 + 0.5*(\buly - 4)}\let\gfyb\pgfmathresult
+\pgfmathparse{4 + 0.8*(\buly - 4)}\let\gfyc\pgfmathresult
+\begin{axis}[clip=false,
+  axis lines=left, axis on top,
+	ymin=0,
+	xmin=0,
+  xtick={0}, xticklabels={Surface},
+  ytick=\empty,
+  xticklabel style={font=\tiny},
+  xlabel={Profondeur}, ylabel={$P_{\text{compart}}$},
+  domain=0:60
+]
+\addplot[] {1 + x/10};
+\addplot[teal] {1};
+\node[anchor=base west] at (60,7) {$P_\text{ext}$};
+\node[anchor=base west] at (60,1) {$P_\text{atm}$};
+\addplot[violet]{1.1696 + (1 + x/10)/0.5578};
+\node[violet,anchor=base west] at (60,\bul) {$P_\text{Bülhman}$};
+%%% gf curves
+\fill[blue] (30,4) circle(2pt) (30,\buly) circle(2pt);
+\end{axis}
+\end{tikzpicture}
+\end{document}
