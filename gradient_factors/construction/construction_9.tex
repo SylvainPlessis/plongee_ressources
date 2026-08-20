@@ -5,7 +5,9 @@
 \usepackage{amsmath}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
-\usetikzlibrary{intersections}
+\usepackage{sansmath}
+\sansmath
+\renewcommand{\familydefault}{\sfdefault}
 \begin{document}\noindent
 \begin{tikzpicture}
 \pgfmathparse{1.1696 + 7/0.5578}\let\bul\pgfmathresult
@@ -33,14 +35,14 @@
 \node[blue] at (10,10) {$g_f = \numprint{0.5}$};
 \node[blue] at (10,11) {$g_f = \numprint{0.8}$};
 %%% gf curves
-\fill[blue] (30,4) circle(2pt) (30,\buly) circle(2pt);
 \draw[dashed] (30,4) -- (30,\buly);
+\fill[blue] (30,4) circle(2pt) (30,\buly) circle(2pt);
 \node[fill=blue,shape=circle,inner sep=1pt,pin=left:$\numprint{0.3}$] at (30,\gfya) {};
 \node[fill=blue,shape=circle,inner sep=1pt,pin=right:$\numprint{0.5}$] at (30,\gfyb) {};
 \node[fill=blue,shape=circle,inner sep=1pt,pin=right:$\numprint{0.8}$] at (30,\gfyc) {};
-\addplot[blue,dotted,name path=GF low]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.3};
-\addplot[blue,dotted,name path=GF low]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.5};
-\addplot[blue,dotted,name path=GF low]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.8};
+\addplot[blue,dotted]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.3};
+\addplot[blue,dotted]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.5};
+\addplot[blue,dotted]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.8};
 \end{axis}
 \end{tikzpicture}
 \end{document}

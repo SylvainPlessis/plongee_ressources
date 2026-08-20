@@ -5,7 +5,9 @@
 \usepackage{amsmath}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
-\usetikzlibrary{intersections}
+\usepackage{sansmath}
+\sansmath
+\renewcommand{\familydefault}{\sfdefault}
 \begin{document}\noindent
 \begin{tikzpicture}
 \pgfmathparse{1.1696 + 7/0.5578}\let\bul\pgfmathresult

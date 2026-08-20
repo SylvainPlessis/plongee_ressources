@@ -4,8 +4,10 @@
 \usepackage[autolanguage]{numprint}
 \usepackage{amsmath}
 \usepackage{pgfplots}
+\usepackage{sansmath}
+\sansmath
+\renewcommand{\familydefault}{\sfdefault}
 \pgfplotsset{compat=1.18}
-\usetikzlibrary{intersections}
 \newcommand{\gf}[1][\relax]{\ensuremath{g_f\ifx#1\relax\else^{(\text{#1})}\fi}}
 \newcommand{\gfl}{\gf[low]}
 \newcommand{\gfh}{\gf[high]}
@@ -34,7 +36,7 @@
 \node[violet,anchor=base west] at (60,\bul) {$P_\text{Bülhman}$};
 %%% gf curves
 \node[right,blue,align=center] at (10,12) {$\gfh = \gfl$\\\smallskip$\numprint{0.85} \ge \gf \ge \numprint{0.90}$};
-\addplot[red,name path=GF low]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.90};
+\addplot[red]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.90};
 \addplot[red]{(1 + x/10) + (1.1696 + (1 + x/10)/0.5578 - 1 - x/10) * 0.85};
 \end{axis}
 \end{tikzpicture}
