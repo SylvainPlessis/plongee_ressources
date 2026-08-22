@@ -46,8 +46,7 @@
 \draw[red,shorten >=-2cm, name path=sursaturation] (0,\gfhy) -- (lowgrad);
 %%% paliers
 \path[name path=last depth] (10,1) -- (10,10);
-\draw[dashed, name intersections={of=sursaturation and last depth,by={last stop}}] (lowgrad) |- (last stop);
-\draw[dashed] (last stop) |- (0,\gfhy);
+\draw[dashed, name intersections={of=sursaturation and last depth,by={last stop}}] (lowgrad) |- (last stop) |- (0,2.2);
 \end{axis}
 \end{tikzpicture}
 \end{document}

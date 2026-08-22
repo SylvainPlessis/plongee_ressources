@@ -22,9 +22,9 @@
   ytick=\empty,
   xticklabel style={font=\tiny},
   xlabel={Profondeur}, ylabel={$P_{\text{compart}}$},
-  domain=0:60
+  domain=0:60,name=graph
 ]
-\addplot[] {1 + x/10};
+\addplot[name path=saturation] {1 + x/10};
 \addplot[teal] {1};
 \node[anchor=base west] at (60,7) {$P_\text{ext}$};
 \node[anchor=base west] at (60,1) {$P_\text{atm}$};
@@ -49,20 +49,19 @@
 \draw[red,shorten >=-2cm,opacity=0.3] (0,\gfhy) -- (lowgrad);
 \draw[red,shorten >=-2cm, name path=sursaturation] (0,\gfhy) -- (lowgradsec);
 %%% ascent
-\path[name path=first depth] (10,1) -- (10,10);
-\draw[dashed, name intersections={of=sursaturation and first depth,by={first stop}}] (lowgradsec) |- (first stop);
-\draw[dashed] (first stop) |- (0,\gfhy);
-%
+\path[name path=depth] (lowgradsec) --++(0,-4);
+\path[name path=lowgraddepth,name intersections={of=saturation and depth,by={first half stop}}] (first half stop) -| (0,0);
+\path[name intersections={of=lowgraddepth and sursaturation, by={first stop}}] (first stop) -| (0,0);
+
+\path[name path=secdepth] (first stop) --++(0,-4);
+\path[name path=lowgradsecdepth,name intersections={of=saturation and secdepth,by={second half stop}}] (second half stop) -| (0,0);
+\draw[dashed, name path=ascent, name intersections={of=lowgradsecdepth and sursaturation, by={second stop}}] (lowgradsec) |- (first stop) |- (second stop) |- (0,2.2);
+%%%
 \path[name path=abs] (0,0) -- (60,0);
-
-\path[name path=second low to abs] (lowgradsec) -- ++(0,-4);
-\path[name path=second last pres] (first stop) -- ++(40,0);
-\path[name intersections={of=second last pres and second low to abs, by={second end of first}}];
-\draw[green!60!black, -stealth, name intersections={of=abs and second low to abs, by={second first pal}}] (second end of first) -- (second first pal) node[font=\tiny,above right=3pt,inner sep=0pt]{Premier palier};
-
-\path[name path=low to abs] (lowgrad) -- ++(0,-4);
-\path[name intersections={of=second last pres and low to abs, by={end of first}}];
-\draw[opacity=0.3,green!60!black, -stealth, name intersections={of=abs and low to abs, by={first pal}}] (end of first) -- (first pal);
+\path[name path=low to abs] (lowgrad) |- (0,0);
+\path[name path=seclow] (first half stop) |- (0,0);
+\draw[green!60!black, -stealth, name intersections={of=abs and seclow, by={second first pal}}] (first half stop) -- (second first pal) node[font=\tiny,above right=3pt,inner sep=0pt]{Premier palier};
+\draw[opacity=0.3,green!60!black, -stealth, name intersections={of=abs and low to abs, by={first pal}}, name intersections={of=low to abs and ascent, by={end of first}}] (end of first) -- (first pal);
 \draw[opacity=0.3,-stealth,shorten <=3pt,shorten >=3pt] ([yshift=-20]lowgrad) -- ([yshift=-20]lowgradsec);
 \end{axis}
 \end{tikzpicture}

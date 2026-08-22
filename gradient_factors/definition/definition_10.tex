@@ -46,17 +46,16 @@
 \draw[red,shorten >=-2cm, name path=sursaturation] (0,\gfhy) -- (lowgrad);
 %%% paliers
 \path[name path=last depth] (10,1) -- (10,10);
-\draw[dashed, name intersections={of=sursaturation and last depth,by={last stop}}] (lowgrad) |- (last stop);
-\draw[dashed] (last stop) |- (0,\gfhy);
+\draw[dashed, name intersections={of=sursaturation and last depth,by={last stop}}] (lowgrad) |- (last stop) |- (0,2.2);
 %%%% caracs
 \path[name path=abs] (0,0) -- (60,0);% abscisse
 \path[name path=second pres] (last stop) -- ++(20,0); %% profondeur dernier palier
 \path[name path=to abs] (lowgrad) -- ++(0,-4); % premier palier to abscisse
 \path[name intersections={of=second pres and to abs, by={end of first}}];
 
-\path[name path=high pres] (0,\gfhy) -- (60,\gfhy);
-\draw[green!60!black,dashed,name intersections={of=last depth and high pres, by={end of last step}}] (end of last step) -- (41,\gfhy);
-\draw[green!60!black,stealth-stealth] (40,\gfhy) -- (40,4) node[pos=0.5,font=\tiny,right]{Temps de palier};
+\path[name path=high pres] (0,2.2) -- (60,2.2);
+\draw[green!60!black,dashed,name intersections={of=last depth and high pres, by={end of last step}}] (end of last step) -- (41,2.2);
+\draw[green!60!black,stealth-stealth] (40,2.2) -- (40,4) node[pos=0.5,font=\tiny,right]{Temps de palier};
 \end{axis}
 \end{tikzpicture}
 \end{document}
